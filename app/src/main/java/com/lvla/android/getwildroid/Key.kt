@@ -1,18 +1,18 @@
 package com.lvla.android.getwildroid
 
 enum class Key private constructor(val freq: Float) {
-    A3(220.0f),
-    A_S3(233.081880f),
-    B3(246.941650f),
-    C3(261.625565f),
-    C_S3(277.182630f),
-    D3(293.664767f),
-    D_S3(311.126983f),
-    E3(329.627556f),
-    F3(349.228231f),
-    F_S3(369.994227f),
-    G3(391.994535f),
-    G_S3(415.304697f);
+    C(16.35f),
+    C_SHARP(17.32f),
+    D(18.35f),
+    D_SHARP(19.45f),
+    E(20.6f),
+    F(21.83f),
+    F_SHARP(23.12f),
+    G(24.5f),
+    G_SHARP(25.96f),
+    A(27.5f),
+    A_SHARP(29.14f),
+    B(30.87f);
 
     fun changeOctave(octave: Int) = freq * Math.pow(2.0 , octave.toDouble())
 }
