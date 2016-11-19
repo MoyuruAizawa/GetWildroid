@@ -51,3 +51,5 @@ captures/
 .idea/libraries/support_media_compat_24_2_1.xml
 .idea/libraries/support_v4_24_2_1.xml
 .idea/libraries/support_vector_drawable_24_2_1.xml
+.idea/libraries/kotlin_runtime_1_0_5_2.xml
+.idea/libraries/kotlin_stdlib_1_0_5_2.xml
