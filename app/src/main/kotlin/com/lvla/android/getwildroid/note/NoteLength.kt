@@ -1,4 +1,4 @@
-package com.lvla.android.getwildroid
+package com.lvla.android.getwildroid.note
 
 enum class NoteLength(val length: Float) {
     WHOLE(1f),

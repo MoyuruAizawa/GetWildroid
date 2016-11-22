@@ -1,6 +1,6 @@
-package com.lvla.android.getwildroid
+package com.lvla.android.getwildroid.note
 
-enum class Key private constructor(val freq: Float) {
+enum class Key(val freq: Float) {
     C(16.35f),
     C_SHARP(17.32f),
     D(18.35f),
