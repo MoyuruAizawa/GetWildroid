@@ -5,33 +5,61 @@ import java.util.*
 
 class Music(val notes: List<Note>) {
     class Recorder {
-        class NoteBuilder(private val notes: ArrayList<Note>, private val key: Key, private val octave: Int) {
-            fun whole()         = add(NoteLength.WHOLE)
-            fun dottedHalf()    = add(NoteLength.DOTTED_HALF)
-            fun half()          = add(NoteLength.HALF)
-            fun dottedQuarter() = add(NoteLength.DOTTED_QUARTER)
-            fun quarter()       = add(NoteLength.QUARTER)
-            fun dottedEight()   = add(NoteLength.DOTTED_EIGHT)
-            fun eight()         = add(NoteLength.EIGHT)
-
-            private fun add(length: NoteLength) {
-                notes.add(MusicalNote(key, octave, length))
+        abstract class NoteBuilder(protected val notes: ArrayList<Note>) {
+            fun whole() {
+                notes.add(newNote(NoteLength.NOTE_1))
             }
+            fun dottedHalf() {
+                notes.add(newNote(NoteLength.NOTE_2_DOTTED))
+            }
+            fun half() {
+                notes.add(newNote(NoteLength.NOTE_2))
+            }
+            fun dottedQuarter() {
+                notes.add(newNote(NoteLength.NOTE_4_DOTTED))
+            }
+            fun quarter() {
+                notes.add(newNote(NoteLength.NOTE_4))
+            }
+            fun dottedEight() {
+                notes.add(newNote(NoteLength.NOTE_8_DOTTED))
+            }
+            fun eight() {
+                notes.add(newNote(NoteLength.NOTE_8))
+            }
+            fun dottedSixteenth() {
+                notes.add(newNote(NoteLength.NOTE_16_DOTTED))
+            }
+            fun sixteenth() {
+                notes.add(newNote(NoteLength.NOTE_16))
+            }
+
+            abstract protected fun newNote(length: NoteLength): Note
+        }
+
+        class MusicalNoteBuilder(notes: ArrayList<Note>, private val key: Key, private val octave: Int): NoteBuilder(notes) {
+            override fun newNote(length: NoteLength) = MusicalNote(key, octave, length)
+        }
+
+        class RestNoteBuilder(notes: ArrayList<Note>): NoteBuilder(notes) {
+            override fun newNote(length: NoteLength) = RestNote(length)
         }
 
         private val notes = arrayListOf<Note>()
 
-        fun c(octave: Int) = NoteBuilder(notes, Key.C, octave)
-        fun cS(octave: Int) = NoteBuilder(notes, Key.C_SHARP, octave)
-        fun d(octave: Int) = NoteBuilder(notes, Key.D, octave)
-        fun dS(octave: Int) = NoteBuilder(notes, Key.D_SHARP, octave)
-        fun e(octave: Int) = NoteBuilder(notes, Key.E, octave)
-        fun f(octave: Int) = NoteBuilder(notes, Key.F, octave)
-        fun g(octave: Int) = NoteBuilder(notes, Key.G_SHARP, octave)
-        fun gS(octave: Int) = NoteBuilder(notes, Key.G, octave)
-        fun a(octave: Int) = NoteBuilder(notes, Key.A, octave)
-        fun aS(octave: Int) = NoteBuilder(notes, Key.A_SHARP, octave)
-        fun b(octave: Int) = NoteBuilder(notes, Key.B, octave)
+        fun c(octave: Int) = MusicalNoteBuilder(notes, Key.C, octave)
+        fun cS(octave: Int) = MusicalNoteBuilder(notes, Key.C_SHARP, octave)
+        fun d(octave: Int) = MusicalNoteBuilder(notes, Key.D, octave)
+        fun dS(octave: Int) = MusicalNoteBuilder(notes, Key.D_SHARP, octave)
+        fun e(octave: Int) = MusicalNoteBuilder(notes, Key.E, octave)
+        fun f(octave: Int) = MusicalNoteBuilder(notes, Key.F, octave)
+        fun fS(octave: Int) = MusicalNoteBuilder(notes, Key.F_SHARP, octave)
+        fun g(octave: Int) = MusicalNoteBuilder(notes, Key.G_SHARP, octave)
+        fun gS(octave: Int) = MusicalNoteBuilder(notes, Key.G, octave)
+        fun a(octave: Int) = MusicalNoteBuilder(notes, Key.A, octave)
+        fun aS(octave: Int) = MusicalNoteBuilder(notes, Key.A_SHARP, octave)
+        fun b(octave: Int) = MusicalNoteBuilder(notes, Key.B, octave)
+        fun rest() = RestNoteBuilder(notes)
 
         fun export() = Music(notes)
     }
