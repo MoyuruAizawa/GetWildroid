@@ -8,16 +8,12 @@ import android.os.Bundle
 
 class MainActivity : AppCompatActivity() {
     val samplingRate = 44100
-    val bufferSize = 38000
+    val bufferSize = 39000
 
-    val melody by lazy {
-        AudioTrack(
-            AudioManager.STREAM_MUSIC,
-                samplingRate,
-            AudioFormat.CHANNEL_OUT_MONO,
-            AudioFormat.ENCODING_DEFAULT,
-            bufferSize,
-            AudioTrack.MODE_STREAM)}
+    val audioTrack by lazy {
+        AudioTrack(AudioManager.STREAM_MUSIC,samplingRate, AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_DEFAULT, bufferSize, AudioTrack.MODE_STREAM)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,16 +22,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun play() {
-        if (melody.playState == AudioTrack.PLAYSTATE_PLAYING) {
+        if (audioTrack.playState == AudioTrack.PLAYSTATE_PLAYING) {
             return
         }
 
         val melodyMusic = createMelody().notes.map { it.toByteArray(samplingRate, bufferSize) }
-
         Thread {
-            melody.play()
-            melodyMusic.forEach { melody.write(it, 0, it.size) }
-            melody.stop()
+            audioTrack.play()
+            melodyMusic.forEach { audioTrack.write(it, 0, it.size) }
+            audioTrack.stop()
 
         }.start()
     }
