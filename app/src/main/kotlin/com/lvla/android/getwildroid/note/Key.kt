@@ -13,6 +13,4 @@ enum class Key(val freq: Float) {
     A(27.5f),
     A_SHARP(29.14f),
     B(30.87f);
-
-    fun changeOctave(octave: Int) = freq * Math.pow(2.0 , octave.toDouble())
 }
